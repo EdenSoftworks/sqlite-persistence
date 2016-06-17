@@ -236,3 +236,4 @@ _Pvt_Extensions
 .fake/
 Dependencies/lib/sqlite-persistence.lib
 Dependencies/lib/sqlite-persistenced.lib
+*.cfg
