@@ -234,3 +234,5 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+Dependencies/lib/sqlite-persistence.lib
+Dependencies/lib/sqlite-persistenced.lib
