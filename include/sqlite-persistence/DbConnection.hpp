@@ -6,10 +6,8 @@
 
 #include "ClassType.hpp"
 #include "DbConnectionState.hpp"
-#include "Disposable.hpp"
 #include "DbConnectionOptions.hpp"
 #include "DbConnectionString.hpp"
-#include "IDbCommand.hpp"
 #include "IDbTransaction.hpp"
 #include "IsolationLevel.hpp"
 
@@ -17,7 +15,10 @@
 
 #include <string>
 
-class DbConnection : public IDbConnection, public Disposable
+class DbCommand;
+class IDbQuery;
+
+class DbConnection : public IDbConnection
 {
     CLASS_TYPE(DbConnection);
 
@@ -27,22 +28,20 @@ public:
 
 	~DbConnection(void);
 
-	void Dispose(void);
-
 	IDbTransaction* const BeginTransaction(const std::string& _trans = "");
 	IDbTransaction* const BeginTransaction(const IsolationLevel& _isolationLevel, const std::string& _trans = "");
 
 	void ChangeDatabase(const DbConnectionString& _connectionString);
 
 	void Close(void);
-	IDbCommand* const CreateCommand(IDbQuery* const _pQuery);
+	DbCommand* CreateCommand(IDbQuery* const _pQuery);
 	void Open(void);
 
 	bool HasConnectionState(const unsigned& _connectionStateMask);
 	bool HasAnyConnectionState(const unsigned& _connectionStateMask);
 
     std::string ErrorMessage(void);
-    unsigned long LastInsertRowId(void);
+    long long LastInsertRowId(void);
 
 	sqlite3* const Database(void);
 	const DbConnectionString ConnectionString(void);

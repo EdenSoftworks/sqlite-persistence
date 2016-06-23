@@ -53,7 +53,7 @@ public:
         pConnection = nullptr;
     }
 
-    IDbCommand* pCommand;
+    DbCommand* pCommand;
     IDbConnection* pConnection;
     IDbQuery* pQuery;
     IDbTransaction* pTransaction;

@@ -6,7 +6,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DbCommand.hpp" />
-    <ClInclude Include="IDbCommand.hpp" />
     <ClInclude Include="DbQuery.hpp" />
     <ClInclude Include="IDbQuery.hpp" />
     <ClInclude Include="Serializer.hpp" />
@@ -24,7 +23,6 @@
     <ClInclude Include="IsolationLevel.hpp" />
     <ClInclude Include="DbConnectionState.hpp" />
     <ClInclude Include="DbReader.hpp" />
-    <ClInclude Include="IDbReader.hpp" />
     <ClInclude Include="Sqlite3Helper.hpp" />
     <ClInclude Include="ClassType.hpp" />
   </ItemGroup>
@@ -44,6 +42,5 @@
     <ClCompile Include="DbTransaction.cpp" />
     <ClCompile Include="DbCommand.cpp" />
     <ClCompile Include="DbQuery.cpp" />
-    <ClCompile Include="DbReader.cpp" />
   </ItemGroup>
 </Project>

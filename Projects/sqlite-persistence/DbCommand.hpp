@@ -2,8 +2,6 @@
     #define _DBCOMMAND_HPP_
 
 #pragma once
-#include "IDbCommand.hpp"
-
 #include "ClassType.hpp"
 
 #include <string>
@@ -11,8 +9,9 @@
 class IDbConnection;
 class IDbQuery;
 class IDbTransaction;
+template <typename T> class DbReader;
 
-class DbCommand : public IDbCommand, public Disposable
+class DbCommand
 {
     CLASS_TYPE(DbCommand);
 
@@ -49,5 +48,15 @@ private:
     bool m_bPrepared;
 
 }; // < end class.
+
+#include "DbReader.hpp"
+
+template <typename T>
+DbReader<T>* DbCommand::ExecuteReader(void)
+{
+    if (!this->m_bPrepared) { this->Prepare(); }
+
+    return new DbReader<T>(this);
+}
 
 #endif _DBCOMMAND_HPP_

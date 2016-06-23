@@ -2,17 +2,18 @@
     #define _DBCOMMAND_HPP_
 
 #pragma once
-#include "IDbCommand.hpp"
-
 #include "ClassType.hpp"
+
+#include "sqlite/sqlite3.h"
 
 #include <string>
 
 class IDbConnection;
 class IDbQuery;
 class IDbTransaction;
+template <typename T> class DbReader;
 
-class DbCommand : public IDbCommand, public Disposable
+class DbCommand
 {
     CLASS_TYPE(DbCommand);
 
