@@ -41,7 +41,7 @@ public:
 	bool HasAnyConnectionState(const unsigned& _connectionStateMask);
 
     std::string ErrorMessage(void);
-    unsigned long LastInsertRowId(void);
+    long long LastInsertRowId(void);
 
 	sqlite3* const Database(void);
 	const DbConnectionString ConnectionString(void);
