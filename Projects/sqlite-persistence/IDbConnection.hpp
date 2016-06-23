@@ -9,14 +9,13 @@
 #include "IDbCommand.hpp"
 #include "IDbTransaction.hpp"
 #include "IDbQuery.hpp"
-#include "IDisposable.hpp"
 #include "IsolationLevel.hpp"
 
 #include "sqlite/sqlite3.h"
 
 #include <string>
 
-class IDbConnection : virtual IDisposable
+class IDbConnection
 {
     CLASS_TYPE(IDbConnection);
 

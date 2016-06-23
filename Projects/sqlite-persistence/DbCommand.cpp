@@ -21,11 +21,6 @@ DbCommand::DbCommand(IDbQuery* const _pQuery, IDbConnection* const _pConnection,
 
 DbCommand::~DbCommand(void)
 {
-	Dispose();
-}
-
-void DbCommand::Dispose(void)
-{
     if (this->m_pStatement != nullptr)
     {
         // < Just in case.

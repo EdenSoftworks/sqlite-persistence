@@ -21,7 +21,7 @@ DbConnection::DbConnection(const DbConnectionString& _connectionString, const Db
 
 DbConnection::~DbConnection(void)
 {
-	this->Dispose();
+    this->Close();
 }
 
 std::string DbConnection::ErrorMessage(void) { return sqlite3_errmsg(this->m_pDatabase); }
@@ -35,11 +35,7 @@ const DbConnectionState DbConnection::ConnectionState(void) { return ((DbConnect
 const DbConnectionOptions DbConnection::ConnectionOptions(void) { return this->m_connectionOptions; }
 
 unsigned long DbConnection::LastInsertRowId(void) { return sqlite3_last_insert_rowid(this->m_pDatabase); }
-
-void DbConnection::Dispose(void)
-{
-	this->Close();
-}
+long long DbConnection::LastInsertRowId(void) { return sqlite3_last_insert_rowid(this->m_pDatabase); }
 
 IDbTransaction* const DbConnection::BeginTransaction(const std::string& _trans)
 {

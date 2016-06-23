@@ -5,7 +5,6 @@
 #include "IDbCommand.hpp"
 
 #include "ClassType.hpp"
-#include "Disposable.hpp"
 
 #include <string>
 
@@ -21,8 +20,6 @@ public:
 
 	DbCommand(IDbQuery* const _pQuery, IDbConnection* const _pConnection, IDbTransaction* const _pTransaction);
 	virtual ~DbCommand(void);
-
-	void Dispose(void);
 
 	void Cancel(void);
 
