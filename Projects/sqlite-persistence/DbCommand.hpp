@@ -4,6 +4,8 @@
 #pragma once
 #include "ClassType.hpp"
 
+#include "sqlite/sqlite3.h"
+
 #include <string>
 
 class IDbConnection;
@@ -23,8 +25,9 @@ public:
 	void Cancel(void);
 
 	void ExecuteNonQuery(void);
-	IDbReader* const ExecuteReader(void);
-	std::string ExecuteScalar(void);
+
+    template <typename T>
+    DbReader<T>* ExecuteReader(void);
 
 	sqlite3_stmt* const Prepare(void);
 

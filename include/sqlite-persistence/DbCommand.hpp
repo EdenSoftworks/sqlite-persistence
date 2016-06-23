@@ -25,8 +25,9 @@ public:
 	void Cancel(void);
 
 	void ExecuteNonQuery(void);
-	IDbReader* const ExecuteReader(void);
-	std::string ExecuteScalar(void);
+
+    template <typename T>
+    DbReader<T>* ExecuteReader(void);
 
 	sqlite3_stmt* const Prepare(void);
 
@@ -50,5 +51,15 @@ private:
     bool m_bPrepared;
 
 }; // < end class.
+
+#include "DbReader.hpp"
+
+template <typename T>
+DbReader<T>* DbCommand::ExecuteReader(void)
+{
+    if (!this->m_bPrepared) { this->Prepare(); }
+
+    return new DbReader<T>(this);
+}
 
 #endif _DBCOMMAND_HPP_

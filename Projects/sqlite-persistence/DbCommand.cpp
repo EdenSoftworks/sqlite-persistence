@@ -52,30 +52,16 @@ void DbCommand::ExecuteNonQuery(void)
 {
     if (!this->m_bPrepared) { this->Prepare(); }
 
-    sqlite3_exec(this->m_pConnection->Database(), this->m_pQuery->Text().c_str(), 0, 0, nullptr);   // < Probably should do something about that
-                                                                                                    // * given err nullptr.
-}
-
-IDbReader* const DbCommand::ExecuteReader(void)
-{
-    if (!this->m_bPrepared) { this->Prepare(); }
-
-    return new DbReader(this);
-}
-
-std::string DbCommand::ExecuteScalar(void)
-{
-    if (!this->m_bPrepared) { this->Prepare(); }
-
-    auto reader = this->ExecuteReader();
-
-    std::string res;
-    res = (reader->Read() && !reader->GetRow().empty()) ? reader->GetRow()[0] : "";
-
-    delete reader;
-    reader = nullptr;
-
-    return res;
+    auto res = sqlite3_exec(this->m_pConnection->Database(), this->m_pQuery->Text().c_str(), 0, 0, nullptr);
+    if (res != SQLITE_OK)
+    {
+        auto err = this->m_pConnection->ErrorMessage();
+        if (err != "not an error")
+        {
+            sqlite3_finalize(this->m_pStatement);
+            throw err;
+        }
+    }
 }
 
 sqlite3_stmt* const  DbCommand::Prepare(void)
