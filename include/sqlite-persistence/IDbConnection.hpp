@@ -35,7 +35,7 @@ public:
 	virtual bool HasAnyConnectionState(const unsigned& _connectionStateMask) = 0;
 
     virtual std::string ErrorMessage(void) = 0;
-    virtual unsigned long LastInsertRowId(void) = 0;
+    virtual long long LastInsertRowId(void) = 0;
 
 	virtual sqlite3* const Database(void) = 0;
 	virtual const DbConnectionString ConnectionString(void) = 0;

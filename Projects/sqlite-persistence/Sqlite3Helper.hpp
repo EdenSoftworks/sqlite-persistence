@@ -10,7 +10,7 @@
 
 static int c_callback(void* param, int argc, char** argv, char** azColName)
 {
-    unsigned index = 0;
+    int index = 0;
     while (index < argc)
     {
         std::cerr << azColName[index] << "=" << argv[index] ? argv[index] : "NULL \n";
