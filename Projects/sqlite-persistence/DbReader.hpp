@@ -40,4 +40,54 @@ private:
 
 }; // < end class.
 
+template <typename T>
+DbReader<T>::DbReader(DbCommand* const _pCommand)
+    : m_pCommand(_pCommand), m_nColumns(sqlite3_column_count(_pCommand->getStmt())) { }
+
+template <typename T>
+DbReader<T>::~DbReader(void) { }
+
+template <typename T>
+const T DbReader<T>::Result(void) { return m_result; }
+
+template <typename T>
+const unsigned long DbReader<T>::Columns(void) { return this->m_nColumns; }
+
+template <typename T>
+bool DbReader<T>::Prepare(void)
+{
+    auto res = sqlite3_step(this->m_pCommand->getStmt());
+    if (res != SQLITE_ROW && res != SQLITE_DONE)
+    {
+        auto err = m_pCommand->Connection()->ErrorMessage();
+        if (err != "not an error")
+        {
+            sqlite3_finalize(this->m_pCommand->getStmt());
+            throw err;
+        }
+
+        sqlite3_finalize(this->m_pCommand->getStmt());
+
+        // < I am unsure if it is possible to get here.
+        return false;
+    }
+
+    if (res == SQLITE_DONE || this->m_nColumns <= 0)
+    {
+        // < Nothing to report.
+        sqlite3_finalize(this->m_pCommand->getStmt());
+        return false;
+    }
+
+    return true;
+}
+
+template <typename T>
+bool DbReader<T>::Read(std::function<bool(DbReader<T>*, sqlite3_stmt*, T&)> _func)
+{
+    if (!this->Prepare()) { return false; }
+
+    return _func(this, this->m_pCommand->getStmt(), this->m_result);
+};
+
 #endif _DBREADER_HPP_
