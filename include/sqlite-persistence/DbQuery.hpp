@@ -27,7 +27,7 @@ public:
 
         if (obj == nullptr) { return false; }
 
-        return obj->m_query.compare(this->m_query);
+        return (obj->m_query.compare(this->m_query) == 1);
     }
 
 private:
