@@ -5,12 +5,11 @@
 #include "IDbTransaction.hpp"
 
 #include "ClassType.hpp"
-#include "Disposable.hpp"
 #include "IDbConnection.hpp"
 
 #include "sqlite/sqlite3.h"
 
-class DbTransaction : public IDbTransaction, public Disposable
+class DbTransaction : public IDbTransaction
 {
     CLASS_TYPE(DbTransaction);
 
@@ -20,8 +19,6 @@ public:
 	~DbTransaction(void);
 
 	void Begin(std::string _trans = "");
-
-	void Dispose(void);
 
 	void Commit(std::string _trans = "");
 

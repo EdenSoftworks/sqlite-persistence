@@ -22,8 +22,6 @@
     <ClInclude Include="DbTransaction.hpp" />
     <ClInclude Include="IDbTransaction.hpp" />
     <ClInclude Include="IsolationLevel.hpp" />
-    <ClInclude Include="IDisposable.hpp" />
-    <ClInclude Include="Disposable.hpp" />
     <ClInclude Include="DbConnectionState.hpp" />
     <ClInclude Include="DbReader.hpp" />
     <ClInclude Include="IDbReader.hpp" />

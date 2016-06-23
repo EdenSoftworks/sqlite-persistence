@@ -11,10 +11,7 @@
 DbTransaction::DbTransaction(sqlite3* _pDatabase, const IsolationLevel& _isolationLevel)
 	: m_pDatabase(_pDatabase), m_isolationLevel(_isolationLevel) { }
 
-DbTransaction::~DbTransaction(void)
-{
-	Dispose();
-}
+DbTransaction::~DbTransaction(void) { }
 
 void DbTransaction::Begin(std::string _trans)
 {
@@ -28,11 +25,6 @@ void DbTransaction::Begin(std::string _trans)
     {
         throw sqlite3_errmsg(this->m_pDatabase);
     }
-}
-
-void DbTransaction::Dispose(void)
-{
-	// < Empty.
 }
 
 void DbTransaction::Commit(std::string _trans)

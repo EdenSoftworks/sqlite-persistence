@@ -6,7 +6,6 @@
 
 #include "ClassType.hpp"
 #include "DbConnectionState.hpp"
-#include "Disposable.hpp"
 #include "DbConnectionOptions.hpp"
 #include "DbConnectionString.hpp"
 #include "IDbCommand.hpp"
@@ -17,7 +16,10 @@
 
 #include <string>
 
-class DbConnection : public IDbConnection, public Disposable
+class DbCommand;
+class IDbQuery;
+
+class DbConnection : public IDbConnection
 {
     CLASS_TYPE(DbConnection);
 
@@ -26,8 +28,6 @@ public:
 	explicit DbConnection(const DbConnectionString& _connectionString, const DbConnectionOptions& _connectionOptions);
 
 	~DbConnection(void);
-
-	void Dispose(void);
 
 	IDbTransaction* const BeginTransaction(const std::string& _trans = "");
 	IDbTransaction* const BeginTransaction(const IsolationLevel& _isolationLevel, const std::string& _trans = "");

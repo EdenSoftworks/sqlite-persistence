@@ -153,12 +153,10 @@ start copy "$(ProjectDir)sqlite/" "$(ProjectDir)../../include/sqlite-persistence
     <ClInclude Include="DbReader.hpp" />
     <ClInclude Include="DbTransaction.hpp" />
     <ClInclude Include="Deserializer.hpp" />
-    <ClInclude Include="Disposable.hpp" />
     <ClInclude Include="IDbCommand.hpp" />
     <ClInclude Include="IDbQuery.hpp" />
     <ClInclude Include="IDbReader.hpp" />
     <ClInclude Include="IDbTransaction.hpp" />
-    <ClInclude Include="IDisposable.hpp" />
     <ClInclude Include="IsolationLevel.hpp" />
     <ClInclude Include="Serializer.hpp" />
     <ClInclude Include="Sqlite3Helper.hpp" />

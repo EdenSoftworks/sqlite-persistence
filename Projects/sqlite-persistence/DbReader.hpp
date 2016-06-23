@@ -5,7 +5,6 @@
 #include "IDbReader.hpp"
 
 #include "ClassType.hpp"
-#include "Disposable.hpp"
 #include "IDbCommand.hpp"
 
 #include "sqlite/sqlite3.h"
