@@ -34,7 +34,6 @@ const DbConnectionState DbConnection::ConnectionState(void) { return ((DbConnect
 
 const DbConnectionOptions DbConnection::ConnectionOptions(void) { return this->m_connectionOptions; }
 
-unsigned long DbConnection::LastInsertRowId(void) { return sqlite3_last_insert_rowid(this->m_pDatabase); }
 long long DbConnection::LastInsertRowId(void) { return sqlite3_last_insert_rowid(this->m_pDatabase); }
 
 IDbTransaction* const DbConnection::BeginTransaction(const std::string& _trans)
