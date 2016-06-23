@@ -3,10 +3,10 @@
 
 #pragma once
 #include "ClassType.hpp"
+#include "DbCommand.hpp"
 #include "DbConnectionState.hpp"
 #include "DbConnectionString.hpp"
 #include "DbConnectionOptions.hpp"
-#include "IDbCommand.hpp"
 #include "IDbTransaction.hpp"
 #include "IDbQuery.hpp"
 #include "IsolationLevel.hpp"
@@ -28,7 +28,7 @@ public:
 	virtual void ChangeDatabase(const DbConnectionString& _connectionString) = 0;
 
 	virtual void Close(void) = 0;
-	virtual IDbCommand* const CreateCommand(IDbQuery* const _pQuery) = 0;
+	virtual DbCommand* CreateCommand(IDbQuery* const _pQuery) = 0;
 	virtual void Open(void) = 0;
 
 	virtual bool HasConnectionState(const unsigned& _connectionStateMask) = 0;

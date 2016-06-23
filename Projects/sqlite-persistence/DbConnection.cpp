@@ -5,7 +5,7 @@
 #include "DbConnectionString.hpp"
 #include "DbConnectionOptions.hpp"
 #include "DbCommand.hpp"
-#include "IDbCommand.hpp"
+#include "DbCommand.hpp"
 #include "DbTransaction.hpp"
 #include "IDbTransaction.hpp"
 #include "IsolationLevel.hpp"
@@ -80,7 +80,7 @@ void DbConnection::Close(void)
 	}
 }
 
-IDbCommand* const DbConnection::CreateCommand(IDbQuery* const _pQuery)
+DbCommand* DbConnection::CreateCommand(IDbQuery* const _pQuery)
 {
     auto pCommand = new DbCommand(_pQuery, this, nullptr);
     return pCommand;

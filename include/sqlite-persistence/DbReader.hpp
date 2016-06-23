@@ -2,37 +2,39 @@
 	#define _DBREADER_HPP_
 
 #pragma once
-#include "IDbReader.hpp"
-
 #include "ClassType.hpp"
-#include "Disposable.hpp"
-#include "IDbCommand.hpp"
+#include "DbCommand.hpp"
 
 #include "sqlite/sqlite3.h"
 
+#include <functional>
 #include <string>
 #include <vector>
 
-class DbReader : public IDbReader, public Disposable
+template <typename T>
+class DbReader
 {
     CLASS_TYPE(DbReader);
 
 public:
 
-    explicit DbReader(IDbCommand* const _pCommand);
+    explicit DbReader(DbCommand* const _pCommand);
     ~DbReader(void);
 
-    void Dispose(void);
+    bool Read(std::function<bool(DbReader<T>*, sqlite3_stmt*, T&)> _func);
 
-    bool Read(void);
+    const unsigned long Columns(void);
+    const T Result(void);
 
-    const std::vector<std::string> GetRow(void);
+protected:
+
+    bool Prepare(void);
 
 private:
 
-    IDbCommand* const m_pCommand;
+    DbCommand* const m_pCommand;
 
-    std::vector<std::string> m_row;
+    T m_result;
 
     int m_nColumns;
 

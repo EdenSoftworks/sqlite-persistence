@@ -4,7 +4,6 @@
 #include "DbConnection.hpp"
 #include "DbReader.hpp"
 #include "IDbConnection.hpp"
-#include "IDbReader.hpp"
 #include "IDbQuery.hpp"
 #include "IDbTransaction.hpp"
 #include "Sqlite3Helper.hpp"

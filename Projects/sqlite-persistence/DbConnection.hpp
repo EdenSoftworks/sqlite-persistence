@@ -8,7 +8,6 @@
 #include "DbConnectionState.hpp"
 #include "DbConnectionOptions.hpp"
 #include "DbConnectionString.hpp"
-#include "IDbCommand.hpp"
 #include "IDbTransaction.hpp"
 #include "IsolationLevel.hpp"
 
@@ -35,7 +34,7 @@ public:
 	void ChangeDatabase(const DbConnectionString& _connectionString);
 
 	void Close(void);
-	IDbCommand* const CreateCommand(IDbQuery* const _pQuery);
+	DbCommand* CreateCommand(IDbQuery* const _pQuery);
 	void Open(void);
 
 	bool HasConnectionState(const unsigned& _connectionStateMask);
