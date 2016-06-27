@@ -14,6 +14,8 @@ public:
 
     virtual ~IDbQuery(void) { }
 
+    virtual void Set(const std::string& _query) = 0;
+
 	virtual const std::string Text(void) = 0;
 
     virtual bool operator == (const IDbQuery& other) const = 0;
