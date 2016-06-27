@@ -33,8 +33,12 @@ public:
 
     IDbConnection* const Connection(void);
 
+    void setQueryText(const std::string& _query);
+
+    void FinalizeStmt(void);
+
     IDbQuery* const getQuery(void);
-    sqlite3_stmt* const getStmt(void);
+    sqlite3_stmt* getStmt(void);
     const bool isPrepared(void);
     const std::string getErr(void);
 

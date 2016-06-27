@@ -23,8 +23,7 @@ DbCommand::~DbCommand(void)
     if (this->m_pStatement != nullptr)
     {
         // < Just in case.
-        sqlite3_finalize(this->m_pStatement);
-        this->m_pStatement = nullptr;
+        this->FinalizeStmt();
 
         this->m_bPrepared = false;
     }
@@ -34,11 +33,36 @@ IDbConnection* const DbCommand::Connection(void) { return this->m_pConnection; }
 
 IDbQuery* const DbCommand::getQuery(void) { return this->m_pQuery; }
 
-sqlite3_stmt* const DbCommand::getStmt(void) { return this->m_pStatement; }
+sqlite3_stmt* DbCommand::getStmt(void) { return this->m_pStatement; }
 
 const bool DbCommand::isPrepared(void) { return this->m_bPrepared; }
 
+void DbCommand::FinalizeStmt(void)
+{
+    auto res = sqlite3_finalize(this->m_pStatement);
+    if (res != SQLITE_OK && res != SQLITE_DONE)
+    {
+        auto err = this->m_pConnection->ErrorMessage();
+        if (err != "not an error")
+        {
+            throw err;
+        }
+    }
+
+    this->m_pStatement = nullptr;
+}
+
 const std::string DbCommand::getErr(void) { return this->m_pConnection->ErrorMessage(); }
+
+void DbCommand::setQueryText(const std::string& _query)
+{
+    if (this->m_bPrepared)
+    {
+        FinalizeStmt();
+        this->m_bPrepared = false;  // < This will force the stmt to be recompiled.
+    }
+    this->m_pQuery->Set(_query);
+}
 
 void DbCommand::Cancel(void)
 {
@@ -53,15 +77,18 @@ void DbCommand::ExecuteNonQuery(void)
     if (!this->m_bPrepared) { this->Prepare(); }
 
     auto res = sqlite3_exec(this->m_pConnection->Database(), this->m_pQuery->Text().c_str(), 0, 0, nullptr);
-    if (res != SQLITE_OK)
+    if (res != SQLITE_OK && res != SQLITE_DONE)
     {
         auto err = this->m_pConnection->ErrorMessage();
         if (err != "not an error")
         {
-            sqlite3_finalize(this->m_pStatement);
+            this->FinalizeStmt();
             throw err;
         }
     }
+
+    this->FinalizeStmt();
+    this->m_bPrepared = false;
 }
 
 sqlite3_stmt* const  DbCommand::Prepare(void)
@@ -72,16 +99,16 @@ sqlite3_stmt* const  DbCommand::Prepare(void)
     if (this->m_bPrepared) { return this->m_pStatement; }
 
     auto res = sqlite3_prepare_v2((m_pConnection->Database()), m_pQuery->Text().c_str(), -1, &this->m_pStatement, 0);
-    if (res != SQLITE_OK)
+    if (res != SQLITE_OK && res != SQLITE_DONE)
     {
         auto err = this->m_pConnection->ErrorMessage();
-        if (err != "not an error") std::cerr << " " << err << std::endl;
-
-        assert(res != SQLITE_OK);
+        if (err != "not an error")
+        {
+            this->FinalizeStmt();
+            throw err;
+        }
     }
 
-
     this->m_bPrepared = true;
-
     return this->m_pStatement;
 }
