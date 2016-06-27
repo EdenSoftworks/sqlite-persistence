@@ -21,6 +21,8 @@ public:
 
 	const std::string Text(void);
 
+    void Set(const std::string& _query);
+
     bool operator == (const IDbQuery& other) const
     {
         const DbQuery* obj = dynamic_cast<const DbQuery*>(&other);
