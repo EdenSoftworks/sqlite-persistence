@@ -25,6 +25,7 @@
     <ClInclude Include="DbReader.hpp" />
     <ClInclude Include="Sqlite3Helper.hpp" />
     <ClInclude Include="ClassType.hpp" />
+    <ClInclude Include="DbJournalMode.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="sqlite">
