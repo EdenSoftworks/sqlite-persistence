@@ -62,11 +62,11 @@ bool DbReader<T>::Prepare(void)
         auto err = m_pCommand->Connection()->ErrorMessage();
         if (err != "not an error")
         {
-            sqlite3_finalize(this->m_pCommand->getStmt());
+            this->m_pCommand->FinalizeStmt();
             throw err;
         }
 
-        sqlite3_finalize(this->m_pCommand->getStmt());
+        this->m_pCommand->FinalizeStmt();
 
         // < I am unsure if it is possible to get here.
         return false;
@@ -75,7 +75,7 @@ bool DbReader<T>::Prepare(void)
     if (res == SQLITE_DONE || this->m_nColumns <= 0)
     {
         // < Nothing to report.
-        sqlite3_finalize(this->m_pCommand->getStmt());
+        this->m_pCommand->FinalizeStmt();
         return false;
     }
 
